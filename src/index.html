@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, nocache" />
+    <meta name="author" content="神林">
+    <meta name="copyright" content="Copyright='DESMG(www.desmg.com) All Rigths Reserved.'; QQ=773933146; Telegram=jyxjjj(https://t.me/jyxjjj); Producer=DESMG;">
+    <meta name="github" content="https://github.com/jyxjjj/RegistryUI">
+    <meta name="license" content="AGPL-3.0-only">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="icon" type="image/svg+xml" href="https://www.desmg.com/desmg.svg">
+    <meta name="color-scheme" content="dark">
+    <meta name="description" content="{{DESCRIPTION}}">
+    <meta name="keywords" content="{{KEYWORDS}}">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&display=swap" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.7/css/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <title>{{TITLE}}</title>
+    <style>
+        * {
+            font-family: JetBrains Mono, Noto Sans SC, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji", system-ui, -apple-system, emoji, monospace;
+            font-feature-settings: "liga" off, "calt" off !important;
+            -webkit-font-smoothing: antialiased !important;
+            text-rendering: optimizeLegibility !important
+        }
+
+        a:link,
+        a:hover,
+        a:focus,
+        a:active,
+        a:visited {
+            color: inherit;
+        }
+
+        html,
+        body,
+        root,
+        table {
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        table {
+            margin: 1rem auto;
+        }
+
+        tr>td,
+        tr>th {
+            border-width: 2px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        button {
+            height: 30px;
+            padding: 2px !important;
+        }
+
+        footer {
+            margin: 16px auto 0 auto;
+            color: #BDBDBD;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="bg-dark text-light">
+    <root>
+        <h2 class="text-center">{{TITLE}}</h2>
+        <table id="repoTable" class="table table-dark table-hover table-sm">
+            <thead>
+                <tr>
+                    <th class="text-center">Name</th>
+                    <th class="text-center">Tag</th>
+                    <th class="text-center">Arch</th>
+                    <th class="text-center">Hash</th>
+                    <th class="text-center">Size</th>
+                    <th class="text-center">Created</th>
+                    <th class="text-center">Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{TABLE_ROWS}}
+            </tbody>
+        </table>
+        <footer>
+            <div style='display: flex;'>
+                <span><a href='https://www.desmg.com/#/policies/privacy' rel='privacy-policy'>Privacy</a></span>
+                <span>&nbsp;|&nbsp;</span>
+                <span><a href='https://www.desmg.com/#/policies/terms' rel='terms-of-service'>Terms</a></span>
+            </div>
+            <span>Copyright &copy; 2025</span>
+            <span><b><a href="https://www.desmg.com">DESMG</a></b> All rights reserved.</span>
+            <span>Powered by <a target="_blank" rel="external noopener noreferrer nofollow" href="https://github.com/jyxjjj/RegistryUI">Registry UI</a></span>
+            <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="external noopener noreferrer nofollow">{{MIIT_RID}}</a></span>
+            <span><a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode={{CPS_RID}}" target="_blank" rel="external noopener noreferrer nofollow">{{CPS_RID_STR}}</a></span>
+        </footer>
+    </root>
+    <script>
+        function deleteTag(repo, tag) {
+            if (!confirm(`Delete ${repo}@${tag}?`)) return;
+            fetch(`/v2/${repo}/manifests/${tag}`, { method: 'DELETE' })
+                .then(_ => {
+                    alert('Delete success!');
+                    window.refresh();
+                }).catch(_ => {
+                    alert('Delete failed!');
+                });
+        }
+    </script>
+</body>
+</html>

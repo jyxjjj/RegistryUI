@@ -1,0 +1,17 @@
+{
+    "name": "registry-ui",
+    "description": "DESMG - CNCF Registry UI",
+    "version": "0.0.0",
+    "private": true,
+    "license": "AGPL-3.0-only",
+    "author": "DESMG <admin@desmg.com> (https://www.desmg.com/)",
+    "type": "commonjs",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "node src/index.js"
+    },
+    "dependencies": {
+        "dotenv": "^17.2.0",
+        "express": "^5.1.0"
+    }
+}

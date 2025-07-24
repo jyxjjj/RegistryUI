@@ -46,6 +46,19 @@ app.get('/', async (req, res) => {
     }
 });
 
+app.use('/login', async (req, res) => {
+    try {
+        if (req.headers['Authorization']) {
+            res.setHeader('Location', '/');
+            res.status(302).send();
+        }
+        res.status(401).send();
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server Error');
+    }
+});
+
 app.use('/v2', async (req, res) => {
     try {
     } catch (err) {

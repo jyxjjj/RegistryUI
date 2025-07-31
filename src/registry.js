@@ -10,6 +10,7 @@ class RegistryAPI {
     }
 
     async fetchAll() {
+        this.rows = [];
         const res = await fetch(`${this.REGISTRY_URL}/_catalog`);
         const data = await res.json();
         const repos = [
@@ -49,6 +50,40 @@ class RegistryAPI {
     addRow(repo, size, hash, tag, arch, created) {
         const row = { repo, tag, arch, hash, size, created };
         this.rows.push(row);
+    }
+
+    async request(URI, method, headers, body) {
+        const url = `${this.REGISTRY_URL}${URI}`;
+        const options = {
+            method: method,
+            headers: {
+                'Accept': headers['accept'] || null,
+                'Accept-Encoding': headers['accept-encoding'] || null,
+                'Accept-Language': headers['accept-language'] || null,
+                'Content-Type': headers['content-type'] || null,
+                'Host': headers['host'],
+                'X-Forwarded-Proto': headers['x-forwarded-proto'] || null,
+                'X-Forwarded-For': headers['x-forwarded-for'] || null,
+                'User-Agent': headers['user-agent'] || null,
+                'SEC-CH-UA': headers['sec-ch-ua'] || null,
+                'IF-None-Match': headers['if-none-match'] || null,
+                'Authorization': headers['authorization'] || null,
+            },
+            body: method === 'get' ? null : body
+        };
+        const res = await fetch(url, options);
+        return {
+            status: res.status,
+            headers: {
+                'Content-Type': res.headers.get('content-type') || 'application/json',
+                'Content-Length': res.headers.get('content-length') || null,
+                'Docker-Content-Digest': res.headers.get('docker-content-digest') || null,
+                'Docker-Distribution-Api-Version': res.headers.get('docker-distribution-api-version') || null,
+                'ETag': res.headers.get('etag') || null,
+                'Last-Modified': res.headers.get('last-modified') || null,
+            },
+            body: res.body
+        };
     }
 }
 
